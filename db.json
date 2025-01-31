@@ -1,0 +1,48 @@
+{
+  "houses": [
+    {
+      "id": "1",
+      "address": "123 Main St",
+      "description": "A beautiful 3-bedroom house with a large backyard.",
+      "rent": 1500,
+      "location": "New York, NY",
+      "image": "/house1.jpg"
+    },
+    {
+      "id": "2",
+      "address": "456 Elm St",
+      "description": "A cozy 2-bedroom apartment near the city center.",
+      "rent": 1200,
+      "location": "Los Angeles, CA",
+      "image": "https://via.placeholder.com/400x300.png?text=House+2"
+    },
+    {
+      "id": "3",
+      "address": "789 Oak St",
+      "description": "A modern 4-bedroom house with a swimming pool.",
+      "rent": 2000,
+      "location": "Chicago, IL",
+      "image": "https://via.placeholder.com/400x300.png?text=House+3"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "john_doe",
+      "email": "johndoe@gmal.com",
+      "password": "password123"
+    },
+    {
+      "id": "2",
+      "username": "jane_smith",
+      "email": "jane@gmail.com",
+      "password": "password456"
+    },
+    {
+      "id": "3681",
+      "name": "emmanuel",
+      "email": "emmanuel@gmail.com",
+      "password": "emmanuel007"
+    }
+  ]
+}
