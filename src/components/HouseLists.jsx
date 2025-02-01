@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import mockData from '../..//db.json';
 
 function HouseLists() {
     const [houses, setHouses] = useState([]);
     const [error, setError] = useState('');
 
+
     useEffect(() => {
+       
         const fetchHouses = async () => {
+            
             try {
-                const res = await fetch('http://localhost:3001/houses'); // Fetch from JSON server
-                if (!res.ok) {
-                    throw new Error('Failed to fetch house data');
-                }
-                const data = await res.json();
-                setHouses(data); // No need for `data.houses`, JSON server returns the array directly
+                // const res = await fetch('http://localhost:3001/houses'); // Fetch from JSON server
+                // if (!res.ok) {
+                //     throw new Error('Failed to fetch house data');
+                // }
+                // const data = await res.json();
+                setHouses(mockData.housesData); // No need for `data.houses`, JSON server returns the array directly
             } catch (error) {
                 setError(error.message);
             }
@@ -28,6 +32,7 @@ function HouseLists() {
             <h2>Available Houses</h2>
             {error && <p className="error">{error}</p>}
             <div className='house-list'>
+                   
                 {houses.map((house) => (
                     <div key={house.id} className='house-item'>
                         <h3>{house.address}</h3>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import mockData from '../..//db.json';
 
 function SignUp() {
     const [name, setName] = useState('');
@@ -14,16 +15,18 @@ function SignUp() {
 
         const newUser = { name, email, password };
 
-        try {
-            const res = await fetch('http://localhost:3001/users', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newUser),
-            });
 
-            if (!res.ok) {
-                throw new Error('Failed to create user');
-            }
+        try {
+            mockData.usersData.push(newUser);
+            // const res = await fetch('http://localhost:3001/usersData', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(newUser),
+            // });
+
+            // if (!res.ok) {
+            //     throw new Error('Failed to create user');
+            // }
             alert('User created successfully');
             
             

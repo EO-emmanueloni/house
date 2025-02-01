@@ -1,5 +1,5 @@
 {
-  "houses": [
+  "housesData": [
     {
       "id": "1",
       "address": "123 Main St",
@@ -25,7 +25,7 @@
       "image": "https://via.placeholder.com/400x300.png?text=House+3"
     }
   ],
-  "users": [
+  "usersData": [
     {
       "id": "1",
       "username": "john_doe",
@@ -43,6 +43,12 @@
       "name": "emmanuel",
       "email": "emmanuel@gmail.com",
       "password": "emmanuel007"
+    },
+    {
+      "id": "7108",
+      "name": "adebayo",
+      "email": "adebayo@gmail.com",
+      "password": "adebayo007"
     }
   ]
 }
