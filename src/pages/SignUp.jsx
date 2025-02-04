@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import mockData from '../..//db.json';
+// import mockData from '../..//db.json';
+import OAuth from "../components/OAuth";
 
 function SignUp() {
     const [name, setName] = useState('');
@@ -17,16 +18,16 @@ function SignUp() {
 
 
         try {
-            mockData.usersData.push(newUser);
-            // const res = await fetch('http://localhost:3001/usersData', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(newUser),
-            // });
+            // mockData.usersData.push(newUser);
+            const res = await fetch('http://localhost:3001/usersData', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newUser),
+            });
 
-            // if (!res.ok) {
-            //     throw new Error('Failed to create user');
-            // }
+            if (!res.ok) {
+                throw new Error('Failed to create user');
+            }
             alert('User created successfully');
             
             
@@ -75,7 +76,7 @@ function SignUp() {
         By Registering you accept our <span>Terms of Use</span> and{" "}
         <span>Privacy</span>
       </h4>
-
+          <OAuth />
       <h4>
         Already have an account? <Link to="/sign-in">Sign in here</Link>
       </h4> 

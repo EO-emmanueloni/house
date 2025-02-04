@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import OAuth from '../components/OAuth';
 
 function SignIn() {
     const [email, setEmail] = useState('');
@@ -43,13 +44,14 @@ function SignIn() {
         <div>
           <label htmlFor="password">Password</label>
           <input type="password" id="password"
-          value={password} 
+          value={password} autoComplete='current-password'
           onChange={(e) => setPassword(e.target.value)}/>
         </div>
 
        
 
         <button type="submit">Sign In</button>
+        <OAuth />
       </form>
       
     </div>

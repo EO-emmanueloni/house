@@ -36,7 +36,8 @@
       "id": "2",
       "username": "jane_smith",
       "email": "jane@gmail.com",
-      "password": "password456"
+      "password": "password456",
+      "image": ""
     },
     {
       "id": "3681",
@@ -49,6 +50,18 @@
       "name": "adebayo",
       "email": "adebayo@gmail.com",
       "password": "adebayo007"
+    },
+    {
+      "id": "f75f",
+      "name": "emmanuel oni",
+      "email": "emmanueloni164@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
+    },
+    {
+      "id": "37c4",
+      "name": "emmanuel oni",
+      "email": "emmanueloni164@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
     }
   ]
 }
