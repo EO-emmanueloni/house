@@ -9,7 +9,7 @@ function Header() {
             <h2>Nest-wise</h2>
 
             <form>
-                <input type="text" placeholder="Search for houses" />
+                <input type="text" placeholder="Search for houses"  />
                 <button>Search</button>
             </form>
 

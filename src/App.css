@@ -65,4 +65,36 @@ form input {
   display: flex;
   gap: 10px;
   flex-direction: row;
+  outline: none;
+}
+
+.profile-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+}
+
+.profile-container h1 {
+  text-align: center;
+}
+
+.profile-container img{
+  align-self: center;
+}
+
+.profile-container form {
+ gap: 10px;
+}
+
+.profile-container form input {
+  display: block;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 500px;
+  margin: auto;
 }
