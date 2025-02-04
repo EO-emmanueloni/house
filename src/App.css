@@ -51,3 +51,18 @@ form input {
   border: 1px solid #ccc;
   width: 100%;
 }
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #e5dddd;
+  color: white;
+}
+
+.header-container form {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+}
