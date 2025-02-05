@@ -1,64 +1,98 @@
 import { useSelector } from "react-redux";
 import { app } from "../firebase";
-import { useRef, useState,useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice';
+import { useDispatch } from "react-redux";
 
 function Profile() {
   const fileRef = useRef(null);
   const { currentUser } = useSelector(state => state.user);
   const [file, setFile] = useState(undefined);
-  console.log(file)
   const [formData, setFormData] = useState({});
+  const dispatch = useDispatch(); 
 
   useEffect(() => {
-    if(file) {
+    if (file) {
       handleFileUpload(file);
     }
   }, [file]);
 
   const handleFileUpload = async (file) => {
-    const storage = getStorage(app)
-    const fileName = new Date().getTime() + file.name;  
+    const storage = getStorage(app);
+    const fileName = `${new Date().getTime()}_${file.name}`;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on('state_changed', 
+    uploadTask.on(
+      'state_changed',
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case 'paused':
-            console.log('Upload is paused');
-            break;
-          case 'running':
-            console.log('Upload is running');
-            break;
-        }
-      }, 
+        console.log(`Upload is ${progress}% done`);
+      },
       (error) => {
-        console.log('Error uploading file:', error);
-      }, 
-      () => {
-        console.log('File uploaded successfully');
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setFormData({ ...formData, photoURL: downloadURL });
-          console.log('File available at', downloadURL);
-        });
+        console.error('Error uploading file:', error);
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        setFormData(prevData => ({
+          ...prevData,
+          photoURL: downloadURL // Update formData state
+        }));
+        console.log('File available at', downloadURL);
       }
     );
-  }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!currentUser?.id) {
+      dispatch(updateUserFailure("User ID is missing"));
+      return;
+    }
+
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(`http://localhost:3001/usersData/${currentUser.id}`, {
+        method: 'PUT',  // Use PUT instead of PATCH
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(updateUserFailure(data.message || "Failed to update user"));
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
+    }
+  };
 
   return (
     <div className='profile-container'>
       <h1>Profile</h1>
-      <form>
-        {/* Hidden file input */}
-        <input style={{
-          display: 'none'
-        }} type="file" ref={fileRef} hidden accept="image/*"
-        onChange={(e) =>setFile(e.target.files[0])} />
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="file" 
+          ref={fileRef} 
+          hidden 
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])} 
+        />
         
-        {/* Clickable image to trigger file input */}
         <img 
           onClick={() => fileRef.current.click()} 
           style={{
@@ -70,9 +104,9 @@ function Profile() {
           alt={currentUser.name} 
         />
 
-        <input type="text" placeholder="Username" id="username" />
-        <input type="text" placeholder="Email" id="email" />
-        <input type="password" placeholder="Password" id="password" />
+        <input type="text" placeholder="Username" id="username" onChange={handleChange} />
+        <input type="text" placeholder="Email" id="email" onChange={handleChange} />
+        <input type="password" placeholder="Password" id="password" onChange={handleChange} />
 
         <button style={{
           padding: '10px',

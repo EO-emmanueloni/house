@@ -12,11 +12,11 @@ function SignIn() {
     // const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault();  // Prevent form refresh
         dispatch(signInStart());
 
         try {
-            const res = await fetch('http://localhost:3001/usersData');
+            const res = await fetch(`http://localhost:3001/usersData`);
             const users = await res.json();
             
             if (!Array.isArray(users)) throw new Error('Invalid response from server');
