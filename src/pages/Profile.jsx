@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { app } from "../firebase";
 import { useRef, useState, useEffect } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { updateUserStart, updateUserSuccess, updateUserFailure } from '../redux/user/userSlice';
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess } from '../redux/user/userSlice';
 import { useDispatch } from "react-redux";
 
 function Profile() {
@@ -81,6 +81,24 @@ function Profile() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+        dispatch(deleteUserStart());
+        const res = await fetch(`http://localhost:3001/usersData/${currentUser.id}`, {
+            method: 'DELETE',
+        });
+
+        const data = await res.json();
+        if(data.success === false) {
+            dispatch(deleteUserFailure(data.message || 'Failed to delete user'));
+            return;
+        }
+        dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
+  }
+}
+
   return (
     <div className='profile-container'>
       <h1>Profile</h1>
@@ -127,7 +145,7 @@ function Profile() {
         cursor: 'pointer',
         color: 'red'
       }}>
-        <span>Delete Account</span>
+        <span onClick={handleDelete}>Delete Account</span>
         <span>Sign out</span>
       </div>
     </div>
