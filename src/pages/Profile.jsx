@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { app } from "../firebase";
+import { signOut, getAuth } from "firebase/auth";
 import { useRef, useState, useEffect } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess } from '../redux/user/userSlice';
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, SignOutUserStart, SignOutUserFailure, SignOutUserSuccess, } from '../redux/user/userSlice';
 import { useDispatch } from "react-redux";
 
 function Profile() {
@@ -97,7 +98,21 @@ function Profile() {
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
   }
-}
+
+  };
+  const handleSignOut = async () => {
+    const auth = getAuth(app);
+    
+
+    try {
+      dispatch(SignOutUserStart());
+      await signOut(auth);
+      dispatch(SignOutUserSuccess());
+    } catch (error) {
+      dispatch(SignOutUserFailure(error.message));
+    }
+
+  };
 
   return (
     <div className='profile-container'>
@@ -146,10 +161,11 @@ function Profile() {
         color: 'red'
       }}>
         <span onClick={handleDelete}>Delete Account</span>
-        <span>Sign out</span>
+        <span onClick={handleSignOut} >Sign out</span>
       </div>
     </div>
   );
+
 }
 
 export default Profile;
