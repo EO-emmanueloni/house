@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, SignOutUserStart, SignOutUserFailure, SignOutUserSuccess, } from '../redux/user/userSlice';
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const fileRef = useRef(null);
@@ -119,9 +120,10 @@ function Profile() {
       <h1>Profile</h1>
       <form onSubmit={handleSubmit}>
         <input 
+        style={{display: 'none'}}
           type="file" 
           ref={fileRef} 
-          hidden 
+          hidden
           accept="image/*"
           onChange={(e) => setFile(e.target.files[0])} 
         />
@@ -150,6 +152,11 @@ function Profile() {
         }}>
           Update
         </button>
+        <Link to={'/create-listing'}
+        style={{background: 'green', color: 'white', 
+        padding: '10px', width: '400px', margin: 'auto', alignSelf: 'center', textAlign: 'center'
+        }}>Create Listing
+        </Link>
       </form>
 
       <div style={{

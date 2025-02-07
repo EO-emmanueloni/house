@@ -98,4 +98,26 @@ form input {
   width: 500px;
   margin: auto;
 }
+.listing-container {
+  padding: 5px;
+  max-width:56rem ;
+}
+.listing-container h1 {
+  text-align: center;
+}
 
+.listing-form {
+display: flex;
+gap: 10px;
+
+
+}
+
+.listing-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  
+
+}

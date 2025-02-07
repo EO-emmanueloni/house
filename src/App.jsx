@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
+import CreateListings from "./pages/CreateListings";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/create-listing" element={<CreateListings />} />
         </Route>
       </Routes>
       
