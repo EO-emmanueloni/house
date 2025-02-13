@@ -119,6 +119,27 @@ function Profile() {
     }
   };
 
+  const handleDeleteListing = async (listingId) => {
+    try {
+      const res = await fetch(`http://localhost:3001/listingData/${listingId}`, {
+        method: 'DELETE',
+      });
+  
+      if (!res.ok) {
+        const data = await res.json();
+        console.log(data.message || 'Failed to delete listing');
+        return;
+      }
+  
+      // Remove the deleted listing from state
+      setUserListings((prevListings) => prevListings.filter((listing) => listing.id !== listingId));
+  
+      console.log(`Listing ${listingId} deleted successfully.`);
+    } catch (error) {
+      console.log("Error deleting listing:", error.message);
+    }
+  };
+  
   return (
     <div className='profile-container'>
       <h1>Profile</h1>
@@ -174,7 +195,7 @@ function Profile() {
           <p>{listing.price}</p>
           <p>{listing.location}</p> */}
           <div style={{display: 'block', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <button style={{color: 'red', padding: '7px'}}>Delete</button>
+            <button onClick={() => handleDeleteListing(listing.id)} style={{color: 'red', padding: '7px'}}>Delete</button>
             <button style={{color: 'green', padding: '7px'}}>Edit</button>
           </div>
         </div>
