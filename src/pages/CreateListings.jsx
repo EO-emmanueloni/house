@@ -98,7 +98,7 @@ const handleSubmit = async (e) => {
     if (data === false) {
       setError(data.message)
     }
-     navigate(`/listings/${data.id}`) 
+     navigate(`/listing/${data.id}`) 
 
   } catch (error) {
     setError(error.message)
