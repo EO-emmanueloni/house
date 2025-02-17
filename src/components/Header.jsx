@@ -31,7 +31,7 @@ function Header() {
             <h2>Nest-wise</h2>
 
             <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Search for houses" 
+                <input type="text" placeholder="Search for houses" name='search'
                 value={searchTerm} 
                 onChange={(e) => setSearchTerm(e.target.value)}
                 />
