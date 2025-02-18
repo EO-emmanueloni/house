@@ -17,6 +17,7 @@ function SearchPage() {
 
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -40,9 +41,14 @@ function SearchPage() {
 
         const fetchListings = async () => {
             setLoading(true);
+            setShowMore(false);
             const searchQuery = urlParams.toString();
             const res = await fetch(`http://localhost:3001/listingData?${searchQuery}`);
             const data = await res.json();
+                if(data.length > 3) {
+                    setShowMore(true);
+                }
+
             setListings(data);
             setLoading(false);
         };
@@ -75,6 +81,24 @@ function SearchPage() {
         urlSearchParams.set("offer", sidebarData.offer);
         navigate(`/search?${urlSearchParams.toString()}`);
     };
+
+    const onShowMoreClick = async () => {
+        const numberOfListings = listings.length;
+        const startIndex = numberOfListings;
+        const urlSearchParams = new URLSearchParams(location.search);
+        urlSearchParams.set("startIndex", startIndex);
+        const searchQuery = urlSearchParams.toString();
+        const res = await fetch(`http://localhost:3001/listingData?${searchQuery}`);
+        const data = await res.json();
+        if(data.length < 5) {
+            setShowMore(true);
+        } else {
+            setShowMore(false);
+        }
+        setListings([...listings, ...data]);
+
+
+    }
 
     return (
         <div>
@@ -140,6 +164,19 @@ function SearchPage() {
                 !loading && listings.map((listing) => <ListingItem key={listing.id} listing={listing} />)
                }
             </div>
+            {showMore && (
+                <button
+                    onClick={onShowMoreClick}
+                        
+                style={{
+                    color: "white",
+                    background: "green",
+                    padding: "10px",
+                    borderRadius: "5px",
+                }}
+                    
+                >Show More</button>
+            )}
         </div>
     );
 }
