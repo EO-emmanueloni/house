@@ -131,7 +131,6 @@ function Profile() {
         return;
       }
   
-      // Remove the deleted listing from state
       setUserListings((prevListings) => prevListings.filter((listing) => listing.id !== listingId));
   
       console.log(`Listing ${listingId} deleted successfully.`);
@@ -141,9 +140,9 @@ function Profile() {
   };
   
   return (
-    <div className='profile-container'>
-      <h1>Profile</h1>
-      <form onSubmit={handleSubmit}>
+    <div style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
+      <h1 style={{ textAlign: "center" }}>Profile</h1>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <input 
           type="file" 
           ref={fileRef} 
@@ -154,7 +153,7 @@ function Profile() {
         
         <img 
           onClick={() => fileRef.current.click()} 
-          style={{ width: '50px', borderRadius: '50%', cursor: 'pointer' }} 
+          style={{ width: '100px', height: '100px', borderRadius: '50%', cursor: 'pointer', alignSelf: "center" }} 
           src={currentUser.photoURL || "/default-avatar.png"} 
           alt={currentUser.name || "User"} 
         />
@@ -163,43 +162,46 @@ function Profile() {
         <input type="email" placeholder="Email" id="email" onChange={handleChange} />
         <input type="password" placeholder="Password" id="password" onChange={handleChange} />
 
-        <button style={{ padding: '10px', width: '400px', margin: 'auto', color: 'white', backgroundColor: 'skyblue' }}>
+        <button style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'skyblue', border: "none", cursor: "pointer" }}>
           Update
         </button>
+
+        {/* Create Listing Button */}
+        <Link 
+          to={'/create-listing'}
+          style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'green', textAlign: 'center', textDecoration: 'none', display: 'block', cursor: "pointer" }} 
+        >
+          Create Listing
+        </Link>
       </form>
 
-      <div style={{ display: 'flex', gap: '20px', margin: '10px auto', justifyContent: 'space-around', cursor: 'pointer', color: 'red' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', color: 'red', cursor: 'pointer' }}>
         <span onClick={handleDelete}>Delete Account</span>
         <span onClick={handleSignOut}>Sign out</span>
       </div>
       
-      <button onClick={handleShowListings} style={{ padding: '10px', width: '500px', margin: 'auto', color: 'white', backgroundColor: 'blue' }}>
+      <button onClick={handleShowListings} style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'blue', marginTop: "10px", cursor: "pointer" }}>
         Show Listings
       </button>
+
       <p>{showListingsError ? "Error showing listings" : ''}</p>
-      <div>
-        <h2>Your Listings</h2>
-      </div>
-      {userListings.length > 0 && userListings.map((listing) => (
-        
-        <div key={listing.id} style={{display: 'flex', justifyContent: '', margin: "10px", padding: "10px", border: "1px solid black", width: "300px"}}>
-          
-          <Link to={`/listing/${listing.id}`}>
-            <img style={{ display: 'block', width: '100px', margin: 'auto' }} src={listing.imageUrls[0]} alt={listing.title} />
-          </Link>  
-          <Link to={`/listing/${listing.id}`}>
-             <p style={{margin: '10px'}}>{listing.name}</p>
-          </Link>
-          
-          {/* <p>{listing.description}</p>
-          <p>{listing.price}</p>
-          <p>{listing.location}</p> */}
-          <div style={{display: 'block', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <button onClick={() => handleDeleteListing(listing.id)} style={{color: 'red', padding: '7px'}}>Delete</button>
-            <button style={{color: 'green', padding: '7px'}}>Edit</button>
-          </div>
+
+      {userListings.length > 0 && (
+        <div>
+          <h2>Your Listings</h2>
+          {userListings.map((listing) => (
+            <div key={listing.id} style={{ display: 'flex', alignItems: "center", marginBottom: "10px", padding: "10px", border: "1px solid black" }}>
+              <Link to={`/listing/${listing.id}`}>
+                <img style={{ width: '100px', marginRight: "10px" }} src={listing.imageUrls[0]} alt={listing.name} />
+              </Link>  
+              <Link to={`/listing/${listing.id}`} style={{ flexGrow: 1, textDecoration: "none", color: "black" }}>
+                <p>{listing.name}</p>
+              </Link>
+              <button onClick={() => handleDeleteListing(listing.id)} style={{ color: 'red', cursor: "pointer" }}>Delete</button>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }
