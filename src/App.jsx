@@ -1,5 +1,5 @@
 import "./App.css";
-import HouseLists from "./components/HouseLists";
+import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Header from "./components/Header";
@@ -19,7 +19,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<HouseLists />} />
+        <Route path="/" element={<Home />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/listing/:listingId" element={<Listing />} />
