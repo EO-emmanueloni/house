@@ -28,7 +28,7 @@ function Header() {
 
     return (
         <div className="header-container">
-            <h2>Nest-wise</h2>
+            <h2 className='text-xl font-bold text-red-500'>Nest-wise</h2>
 
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="Search for houses" name='search'

@@ -1,123 +1,123 @@
 .house-container {
-  max-width: 800px;
-  margin: 50px auto;
-  text-align: center;
-
-}
-
-.house-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.house-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  text-align: left;
-}
-
-.house-card img {
-  width: 50%;
-  height: 200px;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-.house-card p {
-  margin: 5px 0;
-}
-.form-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: center;
   
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-form input {
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  width: 100%;
-}
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  background-color: #e5dddd;
-  color: white;
-}
-
-.header-container form {
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
-  outline: none;
-}
-
-.profile-container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
   
-}
-
-.profile-container h1 {
-  text-align: center;
-}
-
-.profile-container img{
-  align-self: center;
-}
-
-.profile-container form {
- gap: 10px;
-}
-
-.profile-container form input {
-  display: block;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  width: 500px;
-  margin: auto;
-}
-.listing-container {
-  padding: 5px;
-  max-width:56rem ;
-}
-.listing-container h1 {
-  text-align: center;
-}
-
-.listing-form {
-display: flex;
-gap: 10px;
-
-
-}
-
-.listing-form .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
+  .house-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
   
-
-}
+  .house-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    text-align: left;
+  }
+  
+  .house-card img {
+    width: 50%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .house-card p {
+    margin: 5px 0;
+  }
+  .form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  form input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    background-color: #e5dddd;
+    color: white;
+  }
+  
+  .header-container form {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    outline: none;
+  }
+  
+  .profile-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+  }
+  
+  .profile-container h1 {
+    text-align: center;
+  }
+  
+  .profile-container img{
+    align-self: center;
+  }
+  
+  .profile-container form {
+   gap: 10px;
+  }
+  
+  .profile-container form input {
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 500px;
+    margin: auto;
+  }
+  .listing-container {
+    padding: 5px;
+    max-width:56rem ;
+  }
+  .listing-container h1 {
+    text-align: center;
+  }
+  
+  .listing-form {
+  display: flex;
+  gap: 10px;
+  
+  
+  }
+  
+  .listing-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    
+  
+  }

@@ -141,7 +141,7 @@ function Profile() {
   
   return (
     <div style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
-      <h1 style={{ textAlign: "center" }}>Profile</h1>
+      <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         <input 
           type="file" 
@@ -156,15 +156,16 @@ function Profile() {
           style={{ width: '100px', height: '100px', borderRadius: '50%', cursor: 'pointer', alignSelf: "center" }} 
           src={currentUser.photoURL || "/default-avatar.png"} 
           alt={currentUser.name || "User"} 
+          className="rounded-full h-24 w-24 object-cover cursor-pointer"
         />
 
         <input type="text" placeholder="Username" id="username" onChange={handleChange} />
         <input type="email" placeholder="Email" id="email" onChange={handleChange} />
         <input type="password" placeholder="Password" id="password" onChange={handleChange} />
 
-        <button style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'skyblue', border: "none", cursor: "pointer" }}>
+        <Link style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'skyblue', border: "none", cursor: "pointer" }}>
           Update
-        </button>
+        </Link>
 
         {/* Create Listing Button */}
         <Link 
@@ -197,7 +198,15 @@ function Profile() {
               <Link to={`/listing/${listing.id}`} style={{ flexGrow: 1, textDecoration: "none", color: "black" }}>
                 <p>{listing.name}</p>
               </Link>
-              <button onClick={() => handleDeleteListing(listing.id)} style={{ color: 'red', cursor: "pointer" }}>Delete</button>
+              <div>
+                <button className="flex flex-col items-center" onClick={() => handleDeleteListing(listing.id)} >Delete</button>
+
+                <Link   to={`/update-listing/${listing.id}`} >
+                  <button className="text-green-700 uppercase" >Edit</button>
+                </Link>
+
+              </div>
+              
             </div>
           ))}
         </div>

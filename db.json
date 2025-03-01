@@ -74,6 +74,140 @@
       "name": "emmanuel oni",
       "email": "emmanueloni164@gmail.com",
       "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
+    },
+    {
+      "id": "b453",
+      "name": "emmanuel oni",
+      "email": "emmanueloni164@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
+    },
+    {
+      "id": "e1cd",
+      "name": "emmanuel oni",
+      "email": "emmanueloni164@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
+    },
+    {
+      "id": "ee70",
+      "name": "Felix",
+      "email": "felix@gmail.com",
+      "password": "felix007"
+    },
+    {
+      "id": "b089",
+      "name": "emmanuel oni",
+      "email": "emmanueloni164@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
+    },
+    {
+      "id": "e1b3",
+      "name": "emmanuel oni",
+      "email": "emmanueloni164@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
+    },
+    {
+      "id": "4203",
+      "name": "emmanuel oni",
+      "email": "emmanueloni164@gmail.com",
+      "photo": "https://lh3.googleusercontent.com/a/ACg8ocIDEzVJczLghAi8m1DWTJUszqVzDrnO7bGcZb8Yjp0pIGZL_g=s96-c"
+    }
+  ],
+  "listingData": [
+    {
+      "id": "0716",
+      "imageUrls": [
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1740787832/jffxhxpbylon7zr3uhkr.jpg",
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1740787832/egfgedpev8ua0arcqv1s.jpg"
+      ],
+      "name": "gerrad buttler",
+      "description": "bungalow",
+      "address": "ikeja",
+      "type": "rent",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "regularPrice": 50,
+      "discountPrice": "3",
+      "offer": true,
+      "parking": false,
+      "furnished": true,
+      "location": "lekki"
+    },
+    {
+      "id": "1599",
+      "imageUrls": [
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1739443771/vxx0d409nn7txbwjjaix.jpg"
+      ],
+      "name": "create lit",
+      "description": " ghhh",
+      "address": "",
+      "type": "rent",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "regularPrice": 50,
+      "discountPrice": "5",
+      "offer": true,
+      "parking": false,
+      "furnished": true,
+      "location": "nnnn"
+    },
+    {
+      "id": "04c7",
+      "imageUrls": [
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1739878532/ikpxcd0o0iyvg74laj70.jpg",
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1739878533/ufvcnikgzidt4b10bcnb.jpg",
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1739878533/k7imlmwnkbuxfcayji1k.jpg"
+      ],
+      "name": "Modern Home",
+      "description": "Modern Home Description",
+      "address": "",
+      "type": "rent",
+      "bedrooms": 1,
+      "bathrooms": "3",
+      "regularPrice": 50,
+      "discountPrice": 0,
+      "offer": false,
+      "parking": true,
+      "furnished": false,
+      "location": "Modern Home Address"
+    },
+    {
+      "id": "e481",
+      "imageUrls": [
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1739883550/qeyebxnyyhudtqtie6hh.jpg"
+      ],
+      "name": "Mini  flat",
+      "description": "MINI 2  Bedroom Flat",
+      "address": "",
+      "type": "rent",
+      "bedrooms": "2",
+      "bathrooms": 1,
+      "regularPrice": "50",
+      "discountPrice": "22",
+      "offer": true,
+      "parking": false,
+      "furnished": false,
+      "location": "ibeju",
+      "userId": "ee70"
+    },
+    {
+      "id": "3585",
+      "imageUrls": [
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1739922385/iass52hd7hr1yvubcx9n.jpg",
+        "https://res.cloudinary.com/dvz2giwql/image/upload/v1739922384/eqw9euv0isxbmhhpar3m.jpg"
+      ],
+      "name": "new listing for sale",
+      "description": "new listing for sale description",
+      "address": "",
+      "type": "sale",
+      "bedrooms": "4",
+      "bathrooms": "4",
+      "regularPrice": 50,
+      "discountPrice": 0,
+      "offer": false,
+      "parking": false,
+      "furnished": false,
+      "location": "new york",
+      "userId": "ee70"
     }
   ]
 }
