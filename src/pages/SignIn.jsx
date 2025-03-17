@@ -1,37 +1,59 @@
-import React, { useState } from 'react';
-import OAuth from '../components/OAuth';
-import { useDispatch, useSelector } from 'react-redux';
-import { signInStart, signInSuccess, signInFailure } from '../redux/user/userSlice';
-// import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 
 function SignIn() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const dispatch = useDispatch();
-    const { loading, error } = useSelector(state => state.user);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
+    const { loading, error } = useSelector((state) => state.user);
+
+    console.log(loading)
 
     const handleSubmit = async (e) => {
-        e.preventDefault();  // Prevent form refresh
+        e.preventDefault();
         dispatch(signInStart());
 
         try {
-            const res = await fetch(`http://localhost:3001/usersData`);
-            const users = await res.json();
-            
-            if (!Array.isArray(users)) throw new Error('Invalid response from server');
+            const requestBody = { username, password };
+            console.log("Sending login request:", requestBody);
 
-            const user = users.find(user => user.email === email && user.password === password);
+            const res = await fetch("https://netwise-api.onrender.com/api/v1/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(requestBody),
+            });
 
-            if (user) {
-                alert('Sign in successful');
-                dispatch(signInSuccess(user));
-                // navigate('/');
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error("Login error response:", data);
+                throw new Error(data.message || `Error ${res.status}: Failed to log in`);
+            }
+
+            console.log("Login successful:", data);
+
+            if (data.access_token) {
+                const minimalUser = {
+                    id: username, // Use username as ID for now
+                    username: username,
+                    name: username, // Fallback display name
+                };
+
+                dispatch(signInSuccess(minimalUser));
+                localStorage.setItem("token", data.access_token);
+                localStorage.setItem("user", JSON.stringify(minimalUser));
+                alert("Sign in successful");
+                navigate("/");
             } else {
-                dispatch(signInFailure('Invalid email or password'));
+                throw new Error("Invalid response from server");
             }
         } catch (error) {
             dispatch(signInFailure(error.message));
+            alert(error.message);
         }
     };
 
@@ -40,31 +62,37 @@ function SignIn() {
             <h2>Sign In</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email</label>
-                    <input 
-                        type="text" 
-                        id="email" 
-                        placeholder="isioma@gmail.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter your username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        autoComplete="username"
+                        required
                     />
                 </div>
 
                 <div>
                     <label htmlFor="password">Password</label>
-                    <input 
-                        type="password" 
+                    <input
+                        type="password"
                         id="password"
-                        value={password} 
-                        autoComplete='current-password'
+                        placeholder="Enter your password"
+                        value={password}
+                        autoComplete="current-password"
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
                 </div>
 
                 {loading && <p>Loading...</p>}
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={{ color: "red" }}>{error}</p>}
 
-                <button type="submit">Sign In</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Signing in..." : "Sign In"}
+                </button>
                 <OAuth />
             </form>
         </div>

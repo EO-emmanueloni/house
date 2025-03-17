@@ -11,31 +11,37 @@ function OAuth() {
     const handleGoogleSignIn = async () => {
         try {
             const provider = new GoogleAuthProvider();
+            provider.setCustomParameters({ prompt: 'select_account' });
+
             const auth = getAuth(app);
             const result = await signInWithPopup(auth, provider);
             console.log('Google Sign-In Result:', result);
 
-            // Dispatch to Redux
-            dispatch(signInSuccess({
+            // Dispatch user data to Redux
+            const user = {
                 name: result.user.displayName,
                 email: result.user.email,
                 photoURL: result.user.photoURL,
-            }));
+            };
+            dispatch(signInSuccess(user));
 
-            // Persist to backend (optional)
-            await fetch('http://localhost:3001/usersData', {
+            // Store in localStorage
+            localStorage.setItem("user", JSON.stringify(user));
+
+            // Backend API call (optional)
+            const API_URL = process.env.NODE_ENV === 'production'
+                ? 'https://your-deployed-api.com/usersData'
+                : 'http://localhost:3001/usersData';
+
+            await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: result.user.displayName,
-                    email: result.user.email,
-                    photo: result.user.photoURL,
-                }),
+                body: JSON.stringify(user),
             });
 
             navigate('/');
         } catch (error) {
-            console.log('Error signing in with Google:', error);
+            console.error('Error signing in with Google:', error);
             dispatch(signInFailure(error.message));
         }
     };

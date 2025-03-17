@@ -6,15 +6,21 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { 
   updateUserStart, updateUserSuccess, updateUserFailure, 
   deleteUserFailure, deleteUserStart, deleteUserSuccess, 
-  SignOutUserStart, SignOutUserFailure, SignOutUserSuccess 
+  signOutUserStart, signOutUserFailure, signOutUserSuccess 
 } from '../redux/user/userSlice';
 import { Link } from "react-router-dom";
+import ProfileAvatar from "../components/ProfileAvatar";
 
 function Profile() {
   const fileRef = useRef(null);
   const { currentUser } = useSelector(state => state.user);
-  const [file, setFile] = useState(undefined);
-  const [formData, setFormData] = useState({});
+  const [file, setFile] = useState(null);
+  const [formData, setFormData] = useState({
+    username: currentUser?.username || "",
+    email: currentUser?.email || "",
+    password: "",
+    photoURL: currentUser?.photoURL || "",
+  });
   const dispatch = useDispatch(); 
   const [showListingsError, setShowListingsError] = useState(false); 
   const [userListings, setUserListings] = useState([]);
@@ -43,7 +49,6 @@ function Profile() {
       async () => {
         const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
         setFormData(prevData => ({ ...prevData, photoURL: downloadURL }));
-        console.log('File available at', downloadURL);
       }
     );
   };
@@ -82,12 +87,11 @@ function Profile() {
       const res = await fetch(`http://localhost:3001/usersData/${currentUser.id}`, {
         method: 'DELETE',
       });
-      const data = await res.json();
       if (!res.ok) {
-        dispatch(deleteUserFailure(data.message || 'Failed to delete user'));
+        dispatch(deleteUserFailure("Failed to delete user"));
         return;
       }
-      dispatch(deleteUserSuccess(data));
+      dispatch(deleteUserSuccess());
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
@@ -96,11 +100,11 @@ function Profile() {
   const handleSignOut = async () => {
     const auth = getAuth(app);
     try {
-      dispatch(SignOutUserStart());
+      dispatch(signOutUserStart());
       await signOut(auth);
-      dispatch(SignOutUserSuccess());
+      dispatch(signOutUserSuccess());
     } catch (error) {
-      dispatch(SignOutUserFailure(error.message));
+      dispatch(signOutUserFailure(error.message));
     }
   };
 
@@ -124,25 +128,23 @@ function Profile() {
       const res = await fetch(`http://localhost:3001/listingData/${listingId}`, {
         method: 'DELETE',
       });
-  
+
       if (!res.ok) {
-        const data = await res.json();
-        console.log(data.message || 'Failed to delete listing');
+        console.log('Failed to delete listing');
         return;
       }
-  
-      setUserListings((prevListings) => prevListings.filter((listing) => listing.id !== listingId));
-  
-      console.log(`Listing ${listingId} deleted successfully.`);
+
+      setUserListings(prevListings => prevListings.filter(listing => listing.id !== listingId));
     } catch (error) {
       console.log("Error deleting listing:", error.message);
     }
   };
-  
+
   return (
-    <div style={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
-      <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <div className="max-w-xl mx-auto p-6">
+      <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+      
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input 
           type="file" 
           ref={fileRef} 
@@ -150,63 +152,59 @@ function Profile() {
           accept="image/*"
           onChange={(e) => setFile(e.target.files[0])} 
         />
-        
-        <img 
-          onClick={() => fileRef.current.click()} 
-          style={{ width: '100px', height: '100px', borderRadius: '50%', cursor: 'pointer', alignSelf: "center" }} 
-          src={currentUser.photoURL || "/default-avatar.png"} 
-          alt={currentUser.name || "User"} 
-          className="rounded-full h-24 w-24 object-cover cursor-pointer"
-        />
 
-        <input type="text" placeholder="Username" id="username" onChange={handleChange} />
-        <input type="email" placeholder="Email" id="email" onChange={handleChange} />
+        <div className="flex justify-center">
+          {formData.photoURL ? (
+            <img 
+              onClick={() => fileRef.current.click()} 
+              src={formData.photoURL} 
+              alt="Profile" 
+              className="rounded-full h-24 w-24 object-cover cursor-pointer"
+            />
+          ) : (
+            <ProfileAvatar 
+              username={currentUser.username}  
+              photoURL={currentUser.photoURL} 
+              size="50px"
+/>
+          )}
+        </div>
+
+        <input type="text" placeholder="Username" id="username" value={formData.username} onChange={handleChange} />
+        <input type="email" placeholder="Email" id="email" value={formData.email} onChange={handleChange} />
         <input type="password" placeholder="Password" id="password" onChange={handleChange} />
 
-        <Link style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'skyblue', border: "none", cursor: "pointer" }}>
-          Update
-        </Link>
+        <button type="submit" className="bg-blue-500 text-white py-2 rounded-md">Update</button>
 
-        {/* Create Listing Button */}
-        <Link 
-          to={'/create-listing'}
-          style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'green', textAlign: 'center', textDecoration: 'none', display: 'block', cursor: "pointer" }} 
-        >
+        <Link to={'/create-listing'} className="bg-green-500 text-white py-2 text-center rounded-md block">
           Create Listing
         </Link>
       </form>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', color: 'red', cursor: 'pointer' }}>
+      <div className="flex justify-between mt-4 text-red-500 cursor-pointer">
         <span onClick={handleDelete}>Delete Account</span>
         <span onClick={handleSignOut}>Sign out</span>
       </div>
       
-      <button onClick={handleShowListings} style={{ padding: '10px', width: '100%', color: 'white', backgroundColor: 'blue', marginTop: "10px", cursor: "pointer" }}>
+      <button onClick={handleShowListings} className="bg-blue-700 text-white py-2 mt-4 rounded-md w-full">
         Show Listings
       </button>
 
-      <p>{showListingsError ? "Error showing listings" : ''}</p>
+      {showListingsError && <p className="text-red-500 mt-2">Error showing listings</p>}
 
       {userListings.length > 0 && (
-        <div>
+        <div className="mt-4">
           <h2>Your Listings</h2>
           {userListings.map((listing) => (
-            <div key={listing.id} style={{ display: 'flex', alignItems: "center", marginBottom: "10px", padding: "10px", border: "1px solid black" }}>
+            <div key={listing.id} className="flex items-center border p-4 mb-4">
               <Link to={`/listing/${listing.id}`}>
-                <img style={{ width: '100px', marginRight: "10px" }} src={listing.imageUrls[0]} alt={listing.name} />
+                <img className="w-24 h-24 mr-4" src={listing.imageUrls[0]} alt={listing.name} />
               </Link>  
-              <Link to={`/listing/${listing.id}`} style={{ flexGrow: 1, textDecoration: "none", color: "black" }}>
+              <Link to={`/listing/${listing.id}`} className="flex-grow">
                 <p>{listing.name}</p>
               </Link>
-              <div>
-                <button className="flex flex-col items-center" onClick={() => handleDeleteListing(listing.id)} >Delete</button>
-
-                <Link   to={`/update-listing/${listing.id}`} >
-                  <button className="text-green-700 uppercase" >Edit</button>
-                </Link>
-
-              </div>
-              
+              <button className="text-red-500 ml-2" onClick={() => handleDeleteListing(listing.id)}>Delete</button>
+              <Link to={`/update-listing/${listing.id}`} className="text-green-500 ml-2">Edit</Link>
             </div>
           ))}
         </div>
